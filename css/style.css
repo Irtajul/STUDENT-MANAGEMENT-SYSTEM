@@ -1,0 +1,1454 @@
+/* ========================================================== */
+/* GLOBAL STYLES */
+/* ========================================================== */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d2427;
+    margin: 0;
+    padding-top: 85px; /* Navbar fixed তাই team বা নিচের অংশ যেন ঢাকা না পড়ে */
+    color: #f0f0f0;
+    line-height: 1.5;
+}
+
+/* ========================================================== */
+/* NAV BAR STYLES */
+/* ========================================================== */
+.main-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: #0C1A1B; /* তোমার Teal কালার */
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    height: 75px;
+    box-sizing: border-box;
+    z-index: 100000;
+    
+    /* overflow: visible যেন ড্রপডাউন মেনু নিচে দেখা যায় */
+    overflow: visible !important; 
+    border-bottom: 2px solid #d6120c; /* রেড বর্ডার */
+    box-shadow: 0 4px 12px rgba(214, 18, 12, 0.3);
+}
+
+/* লেজার ইফেক্ট - তোমার লাল কালার দিয়ে */
+.main-navbar::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -100%;
+    width: 30%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d6120c, #fff, #d6120c, transparent);
+    animation: laserMove 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes laserMove {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    height: 45px;
+    margin-left: 10px;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.nav-logo-text {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: 10px;
+}
+
+/* Middle Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none !important; 
+    color: #ffffff !important;        
+    font-weight: 600;
+    font-size: 16px; 
+    padding: 10px 0;
+    position: relative;               
+    transition: 0.3s ease;
+}
+
+/* হোভার করলে লাল (#d6120c) হবে এবং আন্ডারলাইন আসবে */
+.nav-links a:hover {
+    color: #d6120c !important; 
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0; 
+    left: 0;
+    background-color: #d6120c; 
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after {
+    width: 100%; 
+}
+
+/* ========================================================== */
+/* DROPDOWN STYLES - FIXED & SPACIOUS */
+/* ========================================================== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1A3A3D; 
+    min-width: 200px; /* উইডথ বাড়ানো হলো যেন মেনু না চাপে */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.6);
+    z-index: 999999; 
+    border-top: 3px solid #d6120c;
+    top: 100%;
+    left: 0;
+    padding: 5px 0;
+}
+
+.dropdown-content a {
+    color: #ffffff !important;           
+    padding: 14px 20px; /* বেশি প্যাডিং যেন ফন্ট না চাপে */
+    display: block;
+    text-decoration: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 16px; /* বড় ফন্ট */
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #ffffff !important;
+    padding-left: 25px; /* হোভার এনিমেশন */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}
+
+/* ========================================================== */
+/* CONTACT INFO & PROFILE STYLES */
+/* ========================================================== */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.contact-info {
+    text-decoration: none !important; 
+    color: #f0f0f0 !important;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 5px 0;
+    position: relative; 
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.contact-info:hover {
+    color: #d6120c !important; 
+}
+
+/* কন্টাক্ট ইনফোতেও সার্ভিস পেজের মতো আন্ডারলাইন */
+.contact-info::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px; 
+    left: 0;
+    background-color: #d6120c; 
+    transition: width 0.3s ease-in-out;
+}
+
+.contact-info:hover::after {
+    width: 100%; 
+}
+
+.contact-info i {
+    font-size: 1.1rem;
+    margin-right: 8px;
+    color: #d6120c;
+}
+
+/* রেসপন্সিভনেস */
+@media (max-width: 1200px) {
+    .contact-text { display: none; }
+}
+
+@media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-right { margin-left: auto; }
+}
+
+/* প্রোফাইল আইকন */
+.user-profile-icon {
+    width: 45px; 
+    height: 45px;
+    border-radius: 12px; 
+    overflow: hidden; 
+    cursor: pointer;
+    border: 2px solid #d6120c; 
+    transition: transform 0.2s ease;
+    margin-left: 10px;
+}
+
+.user-profile-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(214, 18, 12, 0.6);
+}
+
+.user-profile-icon .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+/* style.css (যেকোনো ফাঁকা জায়গায় যোগ করুন) */
+
+/* style.css (যেকোনো ফাঁকা জায়গায় যোগ করুন) */
+
+.top-team-filter-bar {
+    background-color: #1a3a3d; /* আপনার গাঢ় থিম কালার */
+    color: #ffffff;
+    padding: 15px 30px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.top-team-filter-bar h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+
+.main-container {
+    /* 🟢 FIX: 1200px থেকে 1400px এ বাড়ানো হলো (স্ক্রিনের অধিকাংশ জায়গা নেবে) */
+    max-width: 1600px; 
+    margin: 0 auto;
+    padding: 30px 0 !important;
+}
+
+/* ========================================================== */
+/* HERO SECTION STYLES - UPDATED BY GEMINI */
+/* ========================================================== */
+.hero-slider-container {
+    width: 100%;
+    overflow: hidden;
+    height: 800px;
+    position: relative;
+    /* তোমার লাল কালার (#d6120c) দিয়ে সুন্দর শ্যাডো */
+    box-shadow: 0 4px 15px rgba(214, 18, 12, 0.4);
+    border-bottom: 2px solid #d6120c; 
+}
+
+.slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); /* স্লাইডিং আরও স্মুথ করা হলো */
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+/* স্লাইডারের ওপর ডার্ক ওভারলে যেন টেক্সট পরিষ্কার বোঝা যায় */
+.slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(26, 58, 61, 0.6), rgba(13, 36, 39, 0.8));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 1000px;
+    color: white;
+    padding: 20px;
+    /* এনিমেশন যাতে টেক্সট নিচ থেকে উপরে উঠে আসে */
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content h1 {
+    width: 100%;
+    font-size: 4.5rem; /* একটু বড় করা হলো */
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #ffffff; /* টেক্সট সাদা থাকবে */
+    /* তোমার লাল (#d6120c) কালারের আউটলাইন এবং শ্যাডো */
+    text-shadow: 
+        2px 2px 0 #d6120c,
+        -1px -1px 0 #d6120c,  
+        1px -1px 0 #d6120c,
+        -1px 1px 0 #d6120c,
+        1px 1px 0 #d6120c,
+        0 10px 20px rgba(0,0,0,0.5);
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+    color: #f0f0f0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========================================================== */
+/* CTA BUTTON - সার্ভিস পেজের হোভার স্টাইলের সাথে মিল রেখে */
+/* ========================================================== */
+.cta-button {
+    display: inline-block;
+    padding: 18px 45px;
+    background-color: #d6120c; /* তোমার মেইন রেড কালার */
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.3rem;
+    border: 2px solid #ffffff;
+    border-radius: 50px; /* রাউন্ডেড বাটন দেখতে প্রিমিয়াম লাগে */
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(214, 18, 12, 0.5);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* সার্ভিস পেজের মতো হোভার ইফেক্ট */
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #1a3a3d; /* হোভার করলে তোমার Teal কালার আসবে */
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.cta-button:hover::before {
+    left: 0;
+}
+
+.cta-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(214, 18, 12, 0.7);
+    border-color: #d6120c;
+}
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content p { font-size: 1.1rem; }
+    .hero-slider-container { height: 600px; }
+}
+
+/* ========================================================== */
+/* END HERO SECTION STYLES */
+/* ========================================================== */
+
+
+/* --- Header Style --- */
+.header-container {
+    background-color: #2e8b57;
+    color: white;
+    padding: 20px 10px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.header-container h1, .header-container p {
+    margin: 5px 0;
+}
+
+.header-container h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.header-container p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+
+/* ========================================================== */
+/* ACTION BAR STYLES (ORIGINAL + CINEMATIC SUPER SLOW LASER) */
+/* ========================================================== */
+.action-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    background-color: #1a3a3d;
+    padding: 15px;
+    
+    /* তোমার অরিজিনাল বর্ডার এবং শ্যাডো */
+    border: 1px solid #FE0000;
+    border-radius: 8px;
+    box-shadow:
+        0 4px 15px rgba(254, 0, 0, 0.3),
+        0 0 25px 5px rgba(254, 0, 0, 0.3),
+        0 0 50px rgba(55, 82, 48, 0.3);
+    
+    position: relative;
+    overflow: hidden; 
+    z-index: 1;
+}
+
+/* --- বিপু, এই লেজারটি এখন ডানে-বামে (ওপর-নিচে) সুপার স্লো চলবে --- */
+.action-bar::before {
+    content: '';
+    position: absolute;
+    width: 120px; /* আভাটা আরেকটু বড় করা হলো যেন দেখতে প্রিমিয়াম লাগে */
+    height: 120px; 
+    background: radial-gradient(circle, #fff 0%, #d6120c 50%, transparent 75%);
+    filter: blur(10px);
+    z-index: -1;
+    /* পুরো একবার ঘুরে আসতে ১৫ সেকেন্ড সময় নেবে (আরও শান্ত গতি) */
+    animation: moveAroundBorderUltraSlow 15s linear infinite;
+}
+
+/* টাইমিং অ্যাডজাস্টমেন্ট: 
+   - সাইড দেয়ালগুলো পার হতে মাত্র ২% সময় নেবে।
+   - ওপর আর নিচের লম্বা রাস্তা পার হতে বিশাল ৪৮% সময় নেবে।
+*/
+@keyframes moveAroundBorderUltraSlow {
+    0%   { top: 100%; left: 0%;   transform: translate(-50%, -50%); } /* শুরু: নিচ-বাম কোণা */
+    2%   { top: 0%;   left: 0%;   transform: translate(-50%, -50%); } /* বাম সাইড (মাত্র ২% সময়) */
+    50%  { top: 0%;   left: 100%; transform: translate(-50%, -50%); } /* ওপর দিয়ে ডানে (৪৮% বিশাল সময় - সুপার স্লো) */
+    52%  { top: 100%; left: 100%; transform: translate(-50%, -50%); } /* ডান সাইড (মাত্র ২% সময়) */
+    100% { top: 100%; left: 0%;   transform: translate(-50%, -50%); } /* নিচ দিয়ে বামে (৪৮% বিশাল সময় - সুপার স্লো) */
+}
+
+/* ভেতরের Teal অংশ */
+.action-bar::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #1a3a3d;
+    border-radius: 6px;
+    z-index: -1;
+}
+
+/* --- বাকি বাটন এবং ইনপুট কোড আগের মতোই আছে --- */
+#input {
+    flex-grow: 1;
+    max-width: 300px;
+    padding: 10px 15px;
+    border: 1px solid #5a7d81;
+    border-radius: 6px;
+    background-color: #0d2427;
+    color: #f0f0f0;
+    outline: none;
+    z-index: 2;
+}
+
+.action-bar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    z-index: 2;
+}
+
+.action-bar .admin-toggle-btn { background-color: #ffc107; color: #333; border: 1px solid #ff9800; }
+.action-bar .copy-data-btn { background-color: #00bcd4; }
+#submitSearch { background-color: #1a73e8; }
+#refreshData { background-color: #ff9800; }
+#addData { background-color: #00a859; }
+
+.action-bar button:active { transform: scale(0.98); }
+
+
+
+
+
+/* ========================================================== */
+/* NEW: 150PX PROFILE WIDGET STYLES (HALF-OUT CARD DESIGN) */
+/* ========================================================== */
+
+/* কন্টেইনার স্টাইল: উইজেটটিকে সেন্টারে আনতে */
+.profile-widget-container {
+    display: flex;
+    justify-content: center;
+    margin: 80px auto;
+    padding: 0 5px;
+}
+
+/* 1. প্রোফাইল বক্স স্টাইল (150px কার্ড সাইজ) */
+.profile-widget-box {
+    width: 250px; 
+    height: 200px; /* ভেতরের কন্টেন্ট ফিট করার জন্য উচ্চতা বাড়ানো হলো */
+    background-color: #274246; /* আপনার কার্ডের ব্যাকগ্রাউন্ড কালার */
+    border: 1px solid #c9f350;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(201, 243, 80, 0.5), 0 3px 8px rgba(1, 50, 32, 0.5); /* Card থেকে শ্যাডো লজিক নেওয়া হলো */
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; 
+    padding-top: 30px; /* কন্টেন্টকে নিচে নামাতে */
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: visible; 
+}
+
+.profile-widget-box:hover {
+    transform: translateY(-5px); 
+    
+    border: 1px solid #FE0000;
+    box-shadow: 
+        0 0 50px rgba(254, 0, 0, 0.7), 
+        0 8px 15px rgba(1, 50, 32, 0.6);
+}
+
+/* 2. ইমেজ স্টাইল ও পজিশনিং (Half-Out Design) */
+.profile-widget-box .profile-image-large {
+    width: 120px; 
+    height: 120px; 
+    border-radius: 20%; 
+    object-fit: cover;
+    
+    /* হাফ-আউট পজিশনিং */
+    position: absolute; 
+    top: -45px; /* 90px এর অর্ধেক (45px) উপরে টেনে আনা হলো */
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid #FE0000; 
+    background-color: #0d2427; 
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. টেক্সট স্পেসিং এবং স্টাইল (আপনার নতুন ট্যাগ অনুযায়ী) */
+.profile-widget-box h1 {
+    margin-top: 70px; /* ইমেজ থেকে টেক্সটকে নিচে নামাতে 50px মার্জিন */
+    margin-bottom: 2px;
+    font-size: 1rem; /* ছোট বক্সে ফিট করার জন্য */
+    color: #f0f0f0;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    padding: 0 5px; 
+}
+
+.profile-widget-box h5 {
+    margin: 0 0 2px 0;
+    font-size: 0.8rem;
+    color: #3cb371; /* সবুজ রং */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+}
+
+.profile-widget-box p {
+    color: #b0e0e6;
+    margin: 0 0 5px 0;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+}
+
+/* বাটন স্টাইল */
+.profile-widget-box .admin-toggle-btn {
+    display: block; 
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    border-radius: 7px;
+}
+
+/* ========================================================== */
+/* TEAM LIST CONTAINER & GRID (CRUCIAL UPDATE HERE) */
+/* ========================================================== */
+
+/* Student List Container (Grid removed here) */
+#studentList {
+    display: block; 
+    gap: 0;
+    /* 🟢 চূড়ান্ত FIX: ডানে/বামে প্যাডিং শূন্য করা হলো */
+    padding: 30px 0px !important; 
+    
+    /* 🟢 চূড়ান্ত FIX: ডানে/বামে মার্জিন শূন্য করা হলো */
+    margin: 0 auto !important; 
+    
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* ⚠️ নতুন গ্রিড ক্লাস: প্রতিটি টিমের কার্ডগুলিকে গ্রিডে সাজাবে। */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 30px; 
+    padding: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ========================================================== */
+/* TEAM SECTION HEADER STYLES (আপডেট করা হলো) */
+/* ========================================================== */
+
+.team-section-header {
+    width: 100%;
+    position: relative; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* 🟢 FIX 1: বক্স সাইজিং যুক্ত করা হলো যাতে প্যাডিং প্রস্থ না বাড়ায় */
+    box-sizing: border-box; 
+    
+    /* FIX: হেডার চিকন করা */
+    /* 🟢 FIX 2: প্যাডিং 15px থেকে 10px এ কমানো হলো (ঐচ্ছিক) */
+    padding: 10px 10px; 
+    
+    background-color: #1A3A3D;
+    color: #f0f0f0;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    border: 1px solid #FE0000;
+    border-radius: 8px;
+    box-shadow:
+        0 4px 15px rgba(254, 0, 0, 0.3),
+        0 0 25px 5px rgba(254, 0, 0, 0.3),
+        0 0 50px rgba(55, 82, 48, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 5; 
+    height: 35px; 
+}
+
+
+/* NEW: টিম হেডার হোভার স্টাইল */
+.team-section-header:hover {
+    transform: translateY(-5px); /* হোভার করলে 5px উপরে উঠবে */
+    box-shadow: 
+        0 0 30px rgba(60, 179, 113, 0.5), /* উজ্জ্বল সবুজ গ্লো */
+        0 8px 15px rgba(0, 0, 0, 0.6);
+}
+
+.team-header-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    margin-right: auto; 
+}
+
+.team-leaders-images {
+    display: flex;
+    align-items: center;
+    gap: 30px; 
+    margin-right: 100px;  
+}
+
+/* একক লিডার প্রোফাইল ইমেজের স্টাইল */
+.leader-profile-img {
+    width: 100px; /* ইমেজের আকার */
+    height: 100px;
+    border-radius: 25%; /* গোলাকার করার জন্য */
+    border: 2px solid #c9f350; /* হাইলাইট রঙের বর্ডার */
+    object-fit: cover; /* ইমেজ কেটে গেলেও অনুপাত ঠিক রাখার জন্য */
+    transition: transform 0.3s ease;
+}
+
+/* দুটি ইমেজকে সামান্য ওভারল্যাপ করানোর জন্য (ঐচ্ছিক, স্টাইলের জন্য) */
+.team-leaders-images {
+    display: flex;
+    align-items: center;
+    gap: 30px; 
+    
+    /* 🚀 নতুন সংযোজন: বাম দিকে পর্যাপ্ত ফাঁকা স্থান তৈরি করে ইমেজগুলিকে বামে সরিয়ে দেবে */
+    margin-left: 200px; /* উদাহরণস্বরূপ 200px ব্যবহার করা হলো। আপনি এই মানটি কম-বেশি করতে পারেন */
+}
+.leader-profile-img.leader-1 {
+    z-index: 2; /* প্রথম ইমেজটি একটু উপরে দেখাবে */
+}
+
+.leader-profile-img:hover {
+    transform: translateY(-5px); /* হোভার করলে সামান্য উপরে উঠবে */
+}
+
+/* ========================================================== */
+/* CARD STYLES */
+/* ========================================================== */
+
+.card {
+    background: #274246;
+    color: #ffffff;
+    border: 2px solid #6cd79c;
+    border-radius: 10px;
+    padding: 15px 10px 20px 10px;
+    text-align: center;
+    
+    /* White Glow */
+    box-shadow:
+        0 0 20px rgba(201, 243, 80, 0.8),
+        0 2px 7px rgba(1, 50, 32, 0.3);
+        
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    margin-top: 45px;
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 320px; /* ✨ লেআউট ফিক্স: এই লাইনটি বাটনকে নিচে আটকে রাখতে সাহায্য করবে ✨ */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    
+    /* Brighter white glow on hover */
+    box-shadow:
+        0 0 50px rgba(255, 0, 0, 0.7),
+        0 8px 15px rgba(1, 50, 32, 0.6);
+}
+
+.profile-img-container {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 90px;
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #3cb371;
+    box-shadow: 0 0 0 5px rgba(255, 0, 0, 0.8),
+                0 0 15px rgba(60, 179, 113, 0.6);
+}
+
+.profile-initials {
+    width: 80px;
+    height: 80px;
+    background-color: #2e8b57;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.profile-img-tag {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+
+.student-info {
+    padding-top: 40px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* এটি Roll/Name, Icons ও Buttons-কে সমানভাবে সাজিয়ে বাটনকে নিচে ঠেলে দেবে */
+}
+
+.student-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #ffffff;
+}
+
+.student-roll {
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin: 0 0 5px 0;
+}
+
+.student-batch {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 5px 0 10px 0;
+}
+
+/* Social Icons Style */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-top: 1px solid #00AB00;
+    padding-top: 10px;
+}
+
+.social-icons .social-logo {
+    width: 80%; 
+    height: 80%;
+    filter: none;
+}
+
+
+
+
+
+/* 1. সমস্ত সোশ্যাল আইকন কন্টেইনার (a) এর জন্য */
+.social-icons a {
+    /* নিখুঁত বৃত্ত ও আকারের জন্য */
+    margin-top: 175px;
+    width: 30px !important; 
+    height: 30px !important; 
+    border: 1px solid #FE0000;
+    border-radius: 50%; 
+    
+    /* পটভূমি ও আইকনের রঙ */
+    background-color: #ffffff !important; /* অভিন্ন পটভূমির রঙ */
+    color: #00AB00 !important; /* অভিন্ন আইকনের রঙ */
+    
+    /* আইকনকে মাঝখানে আনার জন্য */
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 1.1rem; /* Font Awesome আইকনের আকার */
+    transition: all 0.2s;
+}
+
+/* 2. হোভার স্টাইল (সবুজ #00AB00 এর উপর সামান্য গাঢ় রঙ) */
+.social-icons a:hover {
+    background-color: #000000 !important;
+    transform: scale(1.15);
+}
+
+/* 3. ইমেজ লোগো (Fiverr, Upwork) এর জন্য */
+.social-icons .social-logo {
+    width: 80%; 
+    height: 80%; 
+    /*filter: brightness(0) invert(1); /* 🚨 লোগোর আসল রঙকে সাদা করার জন্য। যদি আপনার লোগোগুলি আগে থেকেই সাদা হয় তবে এই লাইনটি মুছে দিন। */*/
+}
+
+.social-icons a:hover {
+    color: #ff9800;
+    transform: scale(1.15);
+}
+
+/* Hidden Details Style (Email & Phone) */
+.hidden-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s;
+    opacity: 0;
+    padding: 0 10px;
+    text-align: left;
+}
+
+.card.expanded .hidden-details {
+    max-height: 100px;
+    opacity: 1;
+    padding: 10px;
+    margin: 10px 0 15px 0;
+    background-color: #1a3a3d;
+    border-radius: 6px;
+    border-left: 3px solid #FE0000;
+}
+
+.details-section p {
+    margin: 3px 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.details-section i {
+    margin-right: 8px;
+    color: #2e8b57;
+}
+
+/* Card Button Style */
+.card-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.card-buttons button {
+    flex-grow: 1;
+    padding: 8px 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.card-buttons .edit {
+    background-color: #ff9800;
+    color: white;
+}
+
+.card-buttons .delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.card-buttons .open {
+    background-color: #2e8b57;
+    color: white;
+    border: 1px solid #FE0000;
+}
+
+.card-buttons .open:hover {
+    background-color: #226b43;
+}
+
+/* No results found */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    padding: 40px;
+    background-color: #1a3a3d;
+    border-radius: 8px;
+}
+
+/* ========================================================== */
+/* MODAL STYLES */
+/* ========================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #2E8B57;
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 25px rgba(254, 0, 0, 0.9);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid #FE0000;
+}
+
+.modal-title {
+    color: #ffffff;
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    background: #FFC107;
+    border: 1px solid #FFC107;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close-button:hover {
+    color: #333;
+}
+
+/* Modal Profile Header Styles */
+.modal-profile-header {
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: -10px;
+    border-bottom: 1px dashed #ddd;
+    color: #ffffff;
+}
+
+.modal-profile-header .profile-img-container-modal {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2px auto;
+    background-color: #FF0000;
+    color: #ffffff;
+    border-radius: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 5px rgba(230, 230, 230, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-profile-header .profile-img-tag {
+    width: 140px;
+    height: 140px;
+    border-radius: 4%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.modal-profile-header .profile-initials-modal {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    color: #ffffff;
+    border-radius: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 700;
+}
+
+/* Form Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px 10px;
+    align-items: center;
+    box-shadow: 0 0 0 15px rgba(230, 230, 230, 0.2), 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-grid label {
+    font-weight: 600;
+    text-align: right;
+    color: #555;
+}
+
+.form-grid input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* CSS FOR DELETE BUTTON ON STANDARD FIELDS */
+.input-with-delete {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-delete input {
+    width: 100%;
+    padding-right: 35px;
+}
+
+.clear-field-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 0.9rem;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.clear-field-btn:hover {
+    opacity: 1;
+}
+
+/* NEW CUSTOM FIELD STYLES */
+.custom-fields-container {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+}
+
+.custom-fields-title {
+    font-size: 1rem;
+    color: #3cb371;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-weight: 600;
+}
+
+.custom-field-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.custom-field-group input[name*="-key"],
+.custom-field-group input[name*="-value"] {
+    flex-grow: 1;
+}
+
+.custom-field-group input[name*="-key"] {
+    width: 30%;
+    flex-grow: 0;
+    background-color: #e6f7ff;
+}
+
+.custom-field-group .remove-field-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 1;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+}
+
+.custom-field-group .remove-field-btn:hover {
+    background-color: #d32f2f;
+}
+
+.add-custom-field-btn {
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.add-custom-field-btn:hover {
+    background-color: #226b43;
+}
+
+
+.form-actions {
+    margin-top: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.form-actions button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.form-actions .save {
+    background-color: #1a73e8;
+}
+
+.form-actions .save:hover {
+    background-color: #1660b6;
+}
+
+.form-actions .close {
+    background-color: #FFC107;
+    color: #000000;
+}
+
+.form-actions .close:hover {
+    background-color: #5a6268;
+}
+
+/* Details Modal Specific Styles */
+.details-body {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left;
+    border: 1px solid #6cd79c;
+}
+
+.details-body p {
+    margin: 5px 0;
+    padding: 5px 0;
+    border-bottom: 1px dotted #6cd79c;
+    font-size: 1rem;
+    color: #333;
+}
+
+.details-body p:last-child {
+    border-bottom: none;
+}
+
+.details-body strong {
+    /*color: #2e8b57;*/
+    display: inline-block;
+    width: 140px;
+    margin-right: 10px;
+}
+
+/* ========================================================== */
+/* RESPONSIVENESS (Media Queries) */
+/* ========================================================== */
+
+/* 1100px এর নিচে 2 কলামে নেমে যাবে */
+@media (max-width: 1100px) {
+    /* শুধুমাত্র card-grid পরিবর্তন হবে */
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 768px এর নিচে মোবাইল স্ক্রিন */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 0;
+    }
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .action-bar button {
+        width: 100%;
+        margin-top: 5px;
+    }
+    #input {
+        max-width: none;
+        width: 100%;
+    }
+    .header-container {
+        border-radius: 0;
+    }
+    .card-buttons {
+        flex-wrap: wrap;
+    }
+    .card-buttons button {
+        flex-grow: 1;
+        width: 48%;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-grid label {
+        text-align: left;
+    }
+    .details-body strong {
+        width: 100%;
+        display: block;
+        border: 1px solid #FE0000;
+    }
+    .custom-field-group {
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    .custom-field-group input[name*="-key"] {
+        width: 100%;
+        flex-grow: 1;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+}
+
+/* 650px এর নিচে 1 কলামে নেমে যাবে */
+@media (max-width: 650px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    #studentList {
+        padding: 10px;
+    }
+    .team-section-header {
+        margin-top: 25px;
+        padding: 5px 5px;
+    }
+    .team-section-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ========================================================== */
+/* FOOTER STYLES - UPDATED BY GEMINI */
+/* ========================================================== */
+
+.site-footer {
+    background-color: #0C1A1B; /* তোমার Teal কালার */
+    color: #f0f0f0;
+    padding: 30px 0; /* প্যাডিং একটু বাড়ানো হলো গ্যাপের জন্য */
+    margin-top: 50px;
+    text-align: center;
+    width: 100%;
+    /* তোমার লাল কালার (#d6120c) দিয়ে গ্লো শ্যাডো */
+    box-shadow: 0 -4px 15px rgba(214, 18, 12, 0.3);
+    border-top: 2px solid #d6120c; /* উপরে লাল বর্ডার */
+    position: relative;
+    overflow: hidden;
+}
+
+/* ফুটারের নিচেও একটি লেজার ইফেক্ট (ঐচ্ছিক, দেখতে ভালো লাগবে) */
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 30%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d6120c, #fff, #d6120c, transparent);
+    animation: laserMove 10s linear infinite;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin: 8px 0;
+    font-size: 0.95em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 3px;
+}
+
+/* ফুটার লিঙ্কে হোভার করলে তোমার লাল কালার হবে */
+.footer-links a:hover {
+    color: #d6120c;
+}
+
+/* ফুটার লিঙ্কেও নেভিবারের মতো ছোট আন্ডারলাইন অ্যানিমেশন */
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #d6120c;
+    transition: width 0.3s ease;
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+/* কপিরাইট টেক্সট কালার একটু সফট করা হলো */
+.footer-content p:last-child {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85em;
+    margin-top: 15px;
+}
+
+
