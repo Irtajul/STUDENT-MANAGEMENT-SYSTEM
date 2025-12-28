@@ -97,7 +97,6 @@ async function fetchData() {
     }
 }
 
-
 // ==========================================================
 // 3. API UTILITY: Apps Script-এর সাথে ডেটা কমিউনিকেশন
 // ==========================================================
@@ -105,51 +104,49 @@ async function fetchData() {
 async function updateSheetData(data, action, roll = null) {
     const webAppUrl = GOOGLE_APP_SCRIPT_URL; 
     
+    // বাটন নিয়ন্ত্রণ (ডাবল সাবমিশন ঠেকাতে)
+    const form = document.getElementById('addStudentForm') || document.getElementById('editStudentForm');
+    const saveButton = form ? form.querySelector('.save') : null;
+
+    if (saveButton && saveButton.disabled) return; 
+
+    if (saveButton) {
+        saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        saveButton.disabled = true;
+    }
+
     const payload = {
         action: action, 
         data: data,     
         roll: roll      
     };
 
-    const form = document.getElementById('addStudentForm') || document.getElementById('editStudentForm');
-    const saveButton = form ? form.querySelector('.save') : null;
-    let originalButtonText = saveButton ? saveButton.innerHTML : 'Processing...';
-
-    if (saveButton) {
-        saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        saveButton.disabled = true;
-    }
-
     try {
-        // বিপু বন্ধু, এখানে mode: 'no-cors' এবং Content-Type পরিবর্তন করা হয়েছে
-        const response = await fetch(webAppUrl, {
+        await fetch(webAppUrl, {
             method: 'POST',
-            mode: 'no-cors', // এটি CORS ব্লক হওয়া আটকাবে
+            mode: 'no-cors', 
             headers: {
-                'Content-Type': 'text/plain;charset=utf-8', // গুগলের জন্য এটি বেশি কার্যকর
+                'Content-Type': 'text/plain;charset=utf-8',
             },
             body: JSON.stringify(payload), 
         });
 
-        // যেহেতু no-cors মোড ব্যবহার করছি, তাই response.ok বা response.json() সরাসরি কাজ করবে না
-        // আমরা সরাসরি পজিটিভ ফিডব্যাক দেব কারণ এরর না আসলে ডেটা চলে গেছে
-        console.log(`Request sent to Apps Script for action: ${action}`);
+        console.log(`Request sent: ${action}`);
+        alert("সফলভাবে সম্পন্ন হয়েছে!");
         
-        // ৫ সেকেন্ড পর অটো রিফ্রেশ হবে যাতে নতুন ডেটা দেখায়
+        // ৩ সেকেন্ড পর পেজ রিফ্রেশ হবে যাতে ডাটা লোড হতে সময় পায়
         setTimeout(() => {
-            fetchData(); 
+            location.reload();
         }, 2000);
 
-        return { status: 'SUCCESS', message: 'Request sent successfully' };
+        return { status: 'SUCCESS' };
 
     } catch (error) {
         console.error('API Error:', error);
         alert(`Failed to communicate with Google Sheet API: ${error.message}`);
-        throw error;
-    } finally {
         if (saveButton) {
-            saveButton.innerHTML = originalButtonText;
             saveButton.disabled = false;
+            saveButton.innerHTML = 'Save';
         }
     }
 }
@@ -158,21 +155,31 @@ async function updateSheetData(data, action, roll = null) {
 // 4. INITIAL SETUP
 // ==========================================================
 
-// Function to run when the app starts
 async function initApp() {
-    // fetchData() শেষ হওয়ার অপেক্ষা করুন
-    const loadSuccess = await fetchData(); 
-
-    renderStudentList(studentList);
-    toggleAdminButtons(currentAdminMode);
-    
-    // Slider initialization
-    updateSlider(); 
-    
-    if (!loadSuccess) {
-        console.warn("App initialized with local fallback data.");
+    try {
+        const loadSuccess = await fetchData(); 
+        
+        if (typeof renderStudentList === 'function') {
+            renderStudentList(studentList);
+        }
+        if (typeof toggleAdminButtons === 'function') {
+            toggleAdminButtons(currentAdminMode);
+        }
+        if (typeof updateSlider === 'function') {
+            updateSlider(); 
+        }
+        
+        if (!loadSuccess) {
+            console.warn("App initialized with local fallback data.");
+        }
+    } catch (error) {
+        console.error("App Initialization failed:", error);
     }
 }
+
+// এটি নিশ্চিত করে যে পেজ লোড হলে অ্যাপ শুরু হবে
+document.addEventListener('DOMContentLoaded', initApp);
+
 
 
 // ==========================================================
@@ -1002,4 +1009,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if(adminToggleBtn) {
         adminToggleBtn.addEventListener('click', toggleAdminMode);
     }
+
 });
